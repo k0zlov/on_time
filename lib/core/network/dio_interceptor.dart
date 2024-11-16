@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:on_time/core/network/api_endpoints.dart';
+import 'package:on_time/core/network/api_endpoints/api_endpoints.dart';
 import 'package:on_time/core/network/network.dart';
 import 'package:on_time/core/services/auth_service.dart';
 
@@ -13,9 +13,9 @@ class DioInterceptor extends Interceptor {
   final AuthService authService;
 
   /// Generates HTTP headers for requests, including authorization if a token exists.
-  Map<String, String> get generateHeaders {
-    final String? accessToken = authService.getAccessToken;
-    final String? refreshToken = authService.getRefreshToken;
+  Future<Map<String, String>> get generateHeaders async {
+    final String? accessToken = await authService.getAccessToken;
+    final String? refreshToken = await authService.getRefreshToken;
 
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -32,11 +32,11 @@ class DioInterceptor extends Interceptor {
   }
 
   /// Configures and returns a Dio instance with base URL and default headers.
-  Dio get dio {
+  Future<Dio> get dio async {
     final dio = Dio(
       BaseOptions(
         baseUrl: Network.baseUrl!,
-        headers: generateHeaders,
+        headers: await generateHeaders,
       ),
     );
     return dio;
@@ -44,8 +44,11 @@ class DioInterceptor extends Interceptor {
 
   /// Intercepts outgoing requests to add common headers and authorization token.
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final Map<String, String> headers = generateHeaders;
+  Future<void> onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    final Map<String, String> headers = await generateHeaders;
 
     options.headers.addAll(headers);
 
@@ -121,12 +124,12 @@ class DioInterceptor extends Interceptor {
 
   /// Attempts to refresh the user's authentication token.
   Future<void> refreshToken() async {
-    final String? refreshToken = authService.getRefreshToken;
+    final String? refreshToken = await authService.getRefreshToken;
 
     if (refreshToken == null) return;
 
-    final Response<Map<String, dynamic>> response = await dio.get(
-      ApiEndpoints.postRefreshToken,
+    final Response<Map<String, dynamic>> response = await (await dio).get(
+      ApiEndpoints.refreshToken.url,
       queryParameters: {},
     );
 
@@ -149,7 +152,7 @@ class DioInterceptor extends Interceptor {
       method: requestOptions.method,
     );
 
-    final Response<dynamic> response = await dio.request(
+    final Response<dynamic> response = await (await dio).request(
       requestOptions.path,
       options: options,
       data: requestOptions.data,

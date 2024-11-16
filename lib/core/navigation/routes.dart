@@ -1,5 +1,11 @@
 enum AppRoutes {
-  root('/');
+  root('/'),
+  login('/login'),
+  registration('/registration'),
+  user('/user'),
+  dashboard('/dashboard'),
+  timetable('/timetable/:timetableId'),
+  timetableSettings('/timetable/:timetableId/settings');
 
   const AppRoutes(this.path);
 

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:on_time/core/errors/failure.dart';
+import 'package:on_time/core/network/api_endpoints/api_endpoint.dart';
 
 /// Defines the contract for network operations within the application.
 ///
@@ -11,87 +12,8 @@ abstract interface class Network {
   /// A static variable to hold the base URL for all network requests.
   static String? baseUrl;
 
-  /// Performs a GET request.
-  ///
-  /// This method should be implemented to perform a GET request to the specified URL
-  /// with the given query parameters. The response is parsed using the provided
-  /// parser function, and the result is wrapped in an Either type to handle
-  /// success and failure cases.
-  ///
-  /// Parameters:
-  ///   [url] The endpoint URL for the GET request, appended to the base URL.
-  ///   [queryParameters] The query parameters to be included in the GET request.
-  ///   [parser] A function to parse the JSON response into the desired type [T].
-  ///
-  /// Returns:
-  ///   A Future that resolves to an Either type, containing a [Failure] in case of
-  ///   an error, or a [T] instance in case of success.
-  Future<Either<Failure, T>> get<T>({
-    required String url,
-    required T Function(dynamic json) parser,
-    Map<String, dynamic>? queryParameters,
-  });
-
-  /// Performs a POST request.
-  ///
-  /// This method should be implemented to perform a POST request to the specified URL
-  /// with the given data. The response is parsed using the provided parser function,
-  /// and the result is wrapped in an Either type to handle success and failure cases.
-  ///
-  /// Parameters:
-  ///   [url] The endpoint URL for the POST request, appended to the base URL.
-  ///   [data] The data to be sent in the body of the POST request.
-  ///   [parser] A function to parse the JSON response into the desired type [T].
-  ///
-  /// Returns:
-  ///   A Future that resolves to an Either type, containing a [Failure] in case of
-  ///   an error, or a [T] instance in case of success.
-  Future<Either<Failure, T>> post<T>({
-    required String url,
-    required T Function(dynamic json) parser,
-    Map<String, dynamic>? data,
-    Map<String, dynamic>? queryParameters,
-  });
-
-  /// Performs a DELETE request.
-  ///
-  /// This method should be implemented to perform a DELETE request to the specified URL
-  /// with the given data. The response is parsed using the provided parser function,
-  /// and the result is wrapped in an Either type to handle success and failure cases.
-  ///
-  /// Parameters:
-  ///   [url] The endpoint URL for the DELETE request, appended to the base URL.
-  ///   [data] The data to be sent in the body of the DELETE request.
-  ///   [parser] A function to parse the JSON response into the desired type [T].
-  ///   [queryParameters] The query parameters to be included in the DELETE request.
-  ///
-  /// Returns:
-  ///   A Future that resolves to an Either type, containing a [Failure] in case of
-  ///   an error, or a [T] instance in case of success.
-  Future<Either<Failure, T>> delete<T>({
-    required String url,
-    required T Function(dynamic json) parser,
-    Map<String, dynamic>? data,
-    Map<String, dynamic>? queryParameters,
-  });
-
-  /// Performs a PUT request.
-  ///
-  /// This method should be implemented to perform a PUT request to the specified URL
-  /// with the given data. The response is parsed using the provided parser function,
-  /// and the result is wrapped in an Either type to handle success and failure cases.
-  ///
-  /// Parameters:
-  ///   [url] The endpoint URL for the PUT request, appended to the base URL.
-  ///   [data] The data to be sent in the body of the PUT request.
-  ///   [parser] A function to parse the JSON response into the desired type [T].
-  ///   [queryParameters] The query parameters to be included in the PUT request.
-  ///
-  /// Returns:
-  ///   A Future that resolves to an Either type, containing a [Failure] in case of
-  ///   an error, or a [T] instance in case of success.
-  Future<Either<Failure, T>> put<T>({
-    required String url,
+  Future<Either<Failure, T>> request<T>({
+    required ApiEndpoint endpoint,
     required T Function(dynamic json) parser,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
