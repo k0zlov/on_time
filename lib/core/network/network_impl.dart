@@ -21,7 +21,6 @@ class NetworkImpl implements Network {
     );
 
     dio.interceptors.add(interceptor);
-
     return dio;
   }
 
@@ -43,7 +42,7 @@ class NetworkImpl implements Network {
         queryParameters: queryParameters,
       ); // Perform the Dio request.
 
-      dynamic responseData;
+      dynamic responseData = response.data;
 
       if (response.data is List) {
         responseData = {'items': response.data};

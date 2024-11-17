@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:on_time/core/navigation/navigation_stream.dart';
 import 'package:on_time/core/navigation/routes.dart';
+import 'package:on_time/core/screen_factory/screen_factory.dart';
 import 'package:on_time/core/services/auth_service.dart';
 import 'package:on_time/di_container.dart';
 
@@ -11,6 +12,7 @@ class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();
 
   static final GoRouter router = GoRouter(
+    routerNeglect: true,
     navigatorKey: navigatorKey,
     initialLocation: '/',
     refreshListenable: NavigationRefreshStream(
@@ -41,16 +43,15 @@ class AppNavigation {
     routes: [
       GoRoute(
         name: AppRoutes.login.name,
-        path: AppRoutes.login.name,
+        path: AppRoutes.login.path,
+        builder: (context, state) => ScreenFactory.renderLoginScreen(),
       ),
       GoRoute(
         name: AppRoutes.registration.name,
-        path: AppRoutes.registration.name,
+        path: AppRoutes.registration.path,
+        builder: (context, state) => ScreenFactory.renderRegistrationScreen(),
       ),
-      GoRoute(
-        name: AppRoutes.dashboard.name,
-        path: AppRoutes.dashboard.path,
-      ),
+
     ],
   );
 }
