@@ -19,7 +19,6 @@ class RegistrationScreen extends StatelessWidget {
       child: Center(
         child: AuthForm(
           fields: <Widget>[
-            // Заголовок страницы
             const Text(
               'Registration',
               style: TextStyle(
@@ -28,7 +27,6 @@ class RegistrationScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            // Поля ввода
             AuthTextField(
               label: 'Name',
               placeholder: 'Enter your name',
@@ -55,13 +53,11 @@ class RegistrationScreen extends StatelessWidget {
               onChanged: cubit.onRegisterPasswordChanged,
             ),
             const SizedBox(height: 16),
-            // Кнопка регистрации
             AuthButton(
               label: 'Register',
               onPressed: cubit.onRegister,
             ),
             const SizedBox(height: 16),
-            // Ссылка на экран входа
             GestureDetector(
               onTap: () {
                 context.replaceNamed(AppRoutes.login.name);

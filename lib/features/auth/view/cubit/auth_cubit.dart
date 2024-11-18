@@ -24,8 +24,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthState _state = const AuthState();
 
-  final void Function() onLoginCallback;
-  final void Function() onLogoutCallback;
+  final Future<void> Function() onLoginCallback;
+  final Future<void> Function() onLogoutCallback;
 
   final LoginUseCase loginUseCase;
   final LogoutUseCase logoutUseCase;
@@ -35,12 +35,12 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> _init() async {
     final userOrFailure = await getUserUseCase(NoParams());
 
-    userOrFailure.fold(
+    await userOrFailure.fold(
       (_) => onLogoutCallback(),
-      (user) {
+      (user) async {
         _state = _state.copyWith(currentUser: user);
         emit(_state);
-        onLoginCallback();
+        await onLoginCallback();
       },
     );
     getIt.signalReady(this);

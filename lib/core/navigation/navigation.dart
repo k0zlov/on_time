@@ -51,7 +51,20 @@ class AppNavigation {
         path: AppRoutes.registration.path,
         builder: (context, state) => ScreenFactory.renderRegistrationScreen(),
       ),
-
+      ShellRoute(
+        builder: (context, state, child) {
+          return ScreenFactory.renderMainHeader(child);
+        },
+        routes: [
+          GoRoute(
+            name: AppRoutes.dashboard.name,
+            path: AppRoutes.dashboard.path,
+            builder: (context, state) {
+              return ScreenFactory.renderDashboardScreen();
+            },
+          ),
+        ],
+      ),
     ],
   );
 }

@@ -70,7 +70,6 @@ class DioInterceptor extends Interceptor {
           errorMessage = _getMessageFromServer(err) ?? 'Bad response';
           break;
         }
-
       case 401:
         {
           try {
@@ -132,6 +131,8 @@ class DioInterceptor extends Interceptor {
       ApiEndpoints.refreshToken.url,
       queryParameters: {},
     );
+
+    print(response.data);
 
     if (response.statusCode != 200) return;
 

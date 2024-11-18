@@ -11,9 +11,25 @@ import 'package:on_time/features/auth/domain/use_cases/login_use_case/login_use_
 import 'package:on_time/features/auth/domain/use_cases/logout_use_case/logout_use_case.dart';
 import 'package:on_time/features/auth/domain/use_cases/register_use_case/register_use_case.dart';
 import 'package:on_time/features/auth/view/cubit/auth_cubit.dart';
+import 'package:on_time/features/timetables/data/providers/remote/timetables_remote_provider.dart';
+import 'package:on_time/features/timetables/data/repositories/timetables_repository_impl.dart';
+import 'package:on_time/features/timetables/domain/repositories/timetables_repository.dart';
+import 'package:on_time/features/timetables/domain/use_cases/add_event_host_use_case/add_event_host_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/connect_socket_use_case/connect_socket_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/create_event_use_case/create_event_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/create_timetable_use_case/create_timetable_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/delete_event_use_case/delete_event_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/delete_timetable_use_case/delete_timetable_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/disconnect_socket_use_case/disconnect_socket_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/leave_timetable_use_case/leave_timetable_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/remove_event_host_use_case/remove_event_host_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/update_event_use_case/update_event_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/update_timetable_use_case/update_timetable_use_case.dart';
+import 'package:on_time/features/timetables/view/cubit/timetables_cubit.dart';
 
 /// GetIt instance
 final GetIt getIt = GetIt.instance;
+const String _serverBaseUrl = String.fromEnvironment('BASE_URL');
 
 Future<void> registerDependencies() async {
   _services();
@@ -37,33 +53,45 @@ void _services() {
 }
 
 void _network() {
-  const String serverBaseUrl = String.fromEnvironment('BASE_URL');
-
   getIt
     ..registerLazySingleton<DioInterceptor>(
       () => DioInterceptor(authService: getIt()),
     )
     ..registerLazySingleton<Network>(
       () => NetworkImpl(
-        baseUrl: serverBaseUrl,
+        baseUrl: 'http://$_serverBaseUrl',
         interceptor: getIt(),
       ),
     );
 }
 
 void _remoteProviders() {
-  getIt.registerLazySingleton<AuthRemoteProvider>(
-    () => AuthRemoteProviderImpl(network: getIt()),
-  );
+  getIt
+    ..registerLazySingleton<AuthRemoteProvider>(
+      () => AuthRemoteProviderImpl(network: getIt()),
+    )
+    ..registerLazySingleton<TimetablesRemoteProvider>(
+      () => TimetablesRemoteProviderImpl(
+        baseUrl: 'ws://$_serverBaseUrl',
+        network: getIt(),
+      ),
+    );
 }
 
 void _repositories() {
-  getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-      remoteProvider: getIt(),
-      authService: getIt(),
-    ),
-  );
+  getIt
+    ..registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(
+        remoteProvider: getIt(),
+        authService: getIt(),
+      ),
+    )
+    ..registerLazySingleton<TimetablesRepository>(
+      () => TimetablesRepositoryImpl(
+        authService: getIt(),
+        remoteProvider: getIt(),
+      ),
+    );
 }
 
 void _useCases() {
@@ -79,19 +107,72 @@ void _useCases() {
     )
     ..registerLazySingleton<GetUserUseCase>(
       () => GetUserUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<AddEventHostUseCase>(
+      () => AddEventHostUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<CreateEventUseCase>(
+      () => CreateEventUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<CreateTimetableUseCase>(
+      () => CreateTimetableUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<DeleteEventUseCase>(
+      () => DeleteEventUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<DeleteTimetableUseCase>(
+      () => DeleteTimetableUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<LeaveTimetableUseCase>(
+      () => LeaveTimetableUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<RemoveEventHostUseCase>(
+      () => RemoveEventHostUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<UpdateEventUseCase>(
+      () => UpdateEventUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<DisconnectSocketUseCase>(
+      () => DisconnectSocketUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<ConnectSocketUseCase>(
+      () => ConnectSocketUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<UpdateTimetableUseCase>(
+      () => UpdateTimetableUseCase(repository: getIt()),
     );
 }
 
 void _cubits() {
-  getIt.registerSingletonAsync<AuthCubit>(
-    signalsReady: true,
-    () async => AuthCubit(
-      onLoginCallback: () {},
-      onLogoutCallback: () {},
-      loginUseCase: getIt(),
-      registerUseCase: getIt(),
-      logoutUseCase: getIt(),
-      getUserUseCase: getIt(),
-    ),
-  );
+  getIt
+    ..registerLazySingleton<TimetablesCubit>(
+      () => TimetablesCubit(
+        addEventHostUseCase: getIt(),
+        createEventUseCase: getIt(),
+        createTimetableUseCase: getIt(),
+        deleteEventUseCase: getIt(),
+        deleteTimetableUseCase: getIt(),
+        leaveTimetableUseCase: getIt(),
+        removeEventHostUseCase: getIt(),
+        updateEventUseCase: getIt(),
+        updateTimetableUseCase: getIt(),
+        connectSocketUseCase: getIt(),
+        disconnectSocketUseCase: getIt(),
+      ),
+    )
+    ..registerSingletonAsync<AuthCubit>(
+      signalsReady: true,
+      () async => AuthCubit(
+        loginUseCase: getIt(),
+        registerUseCase: getIt(),
+        logoutUseCase: getIt(),
+        getUserUseCase: getIt(),
+        onLoginCallback: () async {
+          await getIt<TimetablesCubit>().onLogin();
+        },
+        onLogoutCallback: () async {
+          await getIt<TimetablesCubit>().onLogout();
+        },
+      ),
+    );
 }

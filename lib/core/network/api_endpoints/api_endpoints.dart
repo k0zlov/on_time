@@ -44,6 +44,7 @@ class ApiEndpoints {
     url: '$timetables/leave',
     method: HttpMethods.post,
   );
+  static const timetablesSocket = '$timetables/socket';
 
   static const events = '/events';
 
