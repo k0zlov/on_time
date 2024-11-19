@@ -31,7 +31,7 @@ import 'package:on_time/features/timetables/view/cubit/timetables_cubit.dart';
 
 /// GetIt instance
 final GetIt getIt = GetIt.instance;
-const String _serverBaseUrl = String.fromEnvironment('BASE_URL');
+const String _serverBaseUrl = 'on-time-server.onrender.com';
 
 Future<void> registerDependencies() async {
   print(_serverBaseUrl);
