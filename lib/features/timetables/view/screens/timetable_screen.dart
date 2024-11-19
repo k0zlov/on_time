@@ -34,7 +34,7 @@ class TimetableScreen extends StatelessWidget {
     }
 
     final String invitationUrl =
-        '${Uri.base.scheme}://${Uri.base.host}:${Uri.base.port}/${timetable.invitationCode}';
+        '${Uri.base.scheme}://${Uri.base.host}:${Uri.base.port}/#/invitation/${timetable.invitationCode}';
 
     return CupertinoPageScaffold(
       child: Padding(

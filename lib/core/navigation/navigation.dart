@@ -14,7 +14,7 @@ class AppNavigation {
   static final GoRouter router = GoRouter(
     routerNeglect: true,
     navigatorKey: navigatorKey,
-    initialLocation: '/dashboard/timetable/1/timetableSettings',
+    initialLocation: '/',
     refreshListenable: NavigationRefreshStream(
       stream: getIt<AuthService>().authStateChanges,
     ),

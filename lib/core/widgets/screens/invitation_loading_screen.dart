@@ -24,7 +24,7 @@ class _InvitationLoadingScreenState extends State<InvitationLoadingScreen> {
   void _handleInvitation() {
     context.read<TimetablesCubit>().onInvitation(widget.code).then((_) {
       if (mounted) {
-        context.goNamed(AppRoutes.dashboard.name);
+        context.replaceNamed(AppRoutes.dashboard.name);
       }
     });
   }

@@ -40,6 +40,10 @@ class TimetableOptionsRow extends StatelessWidget {
       (member) => member.userId == currentUser.id && member.role.isOwner,
     );
 
+    final isAdmin = timetable.members.any(
+      (member) => member.userId == currentUser.id && member.role.isAdmin,
+    );
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -80,17 +84,19 @@ class TimetableOptionsRow extends StatelessWidget {
         ),
         Row(
           children: [
-            CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                _showCreateEventModal(context);
-              },
-              child: const Icon(
-                CupertinoIcons.add,
-                size: 24,
-                color: CupertinoColors.activeBlue,
+            if (isAdmin) ...{
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  _showCreateEventModal(context);
+                },
+                child: const Icon(
+                  CupertinoIcons.add,
+                  size: 24,
+                  color: CupertinoColors.activeBlue,
+                ),
               ),
-            ),
+            },
             CupertinoButton(
               padding: EdgeInsets.zero,
               onPressed: isOwner
