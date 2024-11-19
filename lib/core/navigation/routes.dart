@@ -5,7 +5,7 @@ enum AppRoutes {
   user('/user'),
   dashboard('/dashboard'),
   timetable('/timetable/:timetableId'),
-  timetableSettings('/timetable/:timetableId/settings');
+  timetableSettings('/timetable/:timetableId/timetableSettings');
 
   const AppRoutes(this.path);
 

@@ -143,20 +143,20 @@ class __$$CreateTimetableParamsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CreateTimetableParamsImpl extends _CreateTimetableParams {
   const _$CreateTimetableParamsImpl(
-      {required this.title,
-      required this.startTime,
-      required this.endTime,
-      this.description})
+      {this.title = '', this.startTime = 1, this.endTime = 2, this.description})
       : super._();
 
   factory _$CreateTimetableParamsImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateTimetableParamsImplFromJson(json);
 
   @override
+  @JsonKey()
   final String title;
   @override
+  @JsonKey()
   final int startTime;
   @override
+  @JsonKey()
   final int endTime;
   @override
   final String? description;
@@ -203,9 +203,9 @@ class _$CreateTimetableParamsImpl extends _CreateTimetableParams {
 
 abstract class _CreateTimetableParams extends CreateTimetableParams {
   const factory _CreateTimetableParams(
-      {required final String title,
-      required final int startTime,
-      required final int endTime,
+      {final String title,
+      final int startTime,
+      final int endTime,
       final String? description}) = _$CreateTimetableParamsImpl;
   const _CreateTimetableParams._() : super._();
 

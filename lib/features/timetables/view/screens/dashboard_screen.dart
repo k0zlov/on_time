@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:on_time/features/timetables/view/cubit/timetables_cubit.dart';
-import 'package:on_time/features/timetables/view/widgets/create_timetable_button.dart';
-import 'package:on_time/features/timetables/view/widgets/timetables_grid.dart';
+import 'package:on_time/features/timetables/view/widgets/dashboard_screen/create_timetable_button.dart';
+import 'package:on_time/features/timetables/view/widgets/dashboard_screen/timetables_grid.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});

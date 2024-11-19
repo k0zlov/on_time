@@ -24,7 +24,7 @@ class UpdateTimetableUseCase implements UseCase<void, UpdateTimetableParams> {
 @freezed
 class UpdateTimetableParams with _$UpdateTimetableParams {
   const factory UpdateTimetableParams({
-    required int id,
+    @Default(-1) int id,
     String? title,
     String? description,
     int? startTime,

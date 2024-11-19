@@ -26,9 +26,9 @@ class CreateTimetableUseCase
 @freezed
 class CreateTimetableParams with _$CreateTimetableParams {
   const factory CreateTimetableParams({
-    required String title,
-    required int startTime,
-    required int endTime,
+    @Default('') String title,
+    @Default(1) int startTime,
+    @Default(2) int endTime,
     String? description,
   }) = _CreateTimetableParams;
 

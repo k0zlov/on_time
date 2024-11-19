@@ -27,16 +27,34 @@ class MainHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const LogoButton(),
-              CupertinoButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {},
-                child: Text(
-                  '${currentUser.name} ${currentUser.lastName}',
-                  style: const TextStyle(
-                    color: CupertinoColors.activeBlue,
-                    fontSize: 20,
+              Row(
+                children: [
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      // Action for user profile
+                    },
+                    child: Text(
+                      '${currentUser.name} ${currentUser.lastName}',
+                      style: const TextStyle(
+                        color: CupertinoColors.activeBlue,
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      context.read<AuthCubit>().onLogout();
+                    },
+                    child: const Icon(
+                      CupertinoIcons.square_arrow_right,
+                      color: CupertinoColors.destructiveRed,
+                      size: 24,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

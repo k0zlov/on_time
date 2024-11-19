@@ -9,9 +9,9 @@ part of 'create_timetable_use_case.dart';
 _$CreateTimetableParamsImpl _$$CreateTimetableParamsImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateTimetableParamsImpl(
-      title: json['title'] as String,
-      startTime: (json['startTime'] as num).toInt(),
-      endTime: (json['endTime'] as num).toInt(),
+      title: json['title'] as String? ?? '',
+      startTime: (json['startTime'] as num?)?.toInt() ?? 1,
+      endTime: (json['endTime'] as num?)?.toInt() ?? 2,
       description: json['description'] as String?,
     );
 

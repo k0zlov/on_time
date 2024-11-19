@@ -9,7 +9,7 @@ part of 'update_timetable_use_case.dart';
 _$UpdateTimetableParamsImpl _$$UpdateTimetableParamsImplFromJson(
         Map<String, dynamic> json) =>
     _$UpdateTimetableParamsImpl(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt() ?? -1,
       title: json['title'] as String?,
       description: json['description'] as String?,
       startTime: (json['startTime'] as num?)?.toInt(),

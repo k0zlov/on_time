@@ -14,7 +14,7 @@ class AppNavigation {
   static final GoRouter router = GoRouter(
     routerNeglect: true,
     navigatorKey: navigatorKey,
-    initialLocation: '/',
+    initialLocation: '/dashboard/timetable/1/timetableSettings',
     refreshListenable: NavigationRefreshStream(
       stream: getIt<AuthService>().authStateChanges,
     ),
@@ -62,6 +62,34 @@ class AppNavigation {
             builder: (context, state) {
               return ScreenFactory.renderDashboardScreen();
             },
+            routes: [
+              GoRoute(
+                name: AppRoutes.timetable.name,
+                path: AppRoutes.timetable.path,
+                builder: (context, state) {
+                  final String? timetableId =
+                      state.pathParameters['timetableId'];
+
+                  return ScreenFactory.renderTimetableScreen(
+                    timetableId: int.tryParse(timetableId ?? '') ?? -1,
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    name: AppRoutes.timetableSettings.name,
+                    path: AppRoutes.timetableSettings.name,
+                    builder: (context, state) {
+                      final String? timetableId =
+                          state.pathParameters['timetableId'];
+
+                      return ScreenFactory.renderTimetableSettingsScreen(
+                        timetableId: int.tryParse(timetableId ?? '') ?? -1,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),

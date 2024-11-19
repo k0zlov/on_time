@@ -186,11 +186,11 @@ class __$$CreateEventParamsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CreateEventParamsImpl extends _CreateEventParams {
   const _$CreateEventParamsImpl(
-      {required this.title,
-      required this.timetableId,
-      required this.day,
-      required this.startTime,
-      required this.endTime,
+      {this.title = '',
+      this.timetableId = 0,
+      this.day = -1,
+      this.startTime = 2,
+      this.endTime = 1,
       final List<int> hosts = const [],
       this.description})
       : _hosts = hosts,
@@ -200,14 +200,19 @@ class _$CreateEventParamsImpl extends _CreateEventParams {
       _$$CreateEventParamsImplFromJson(json);
 
   @override
+  @JsonKey()
   final String title;
   @override
+  @JsonKey()
   final int timetableId;
   @override
+  @JsonKey()
   final int day;
   @override
+  @JsonKey()
   final int startTime;
   @override
+  @JsonKey()
   final int endTime;
   final List<int> _hosts;
   @override
@@ -274,11 +279,11 @@ class _$CreateEventParamsImpl extends _CreateEventParams {
 
 abstract class _CreateEventParams extends CreateEventParams {
   const factory _CreateEventParams(
-      {required final String title,
-      required final int timetableId,
-      required final int day,
-      required final int startTime,
-      required final int endTime,
+      {final String title,
+      final int timetableId,
+      final int day,
+      final int startTime,
+      final int endTime,
       final List<int> hosts,
       final String? description}) = _$CreateEventParamsImpl;
   const _CreateEventParams._() : super._();

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:on_time/core/widgets/responsive/responsive_mixin.dart';
 import 'package:on_time/features/timetables/domain/entities/timetable_entity/timetable_entity.dart';
-import 'package:on_time/features/timetables/view/widgets/timetables_card.dart';
+import 'package:on_time/features/timetables/view/widgets/dashboard_screen/timetables_card.dart';
 
 class TimetablesGrid extends StatelessWidget with Responsive<int> {
   final List<TimetableEntity> timetables;

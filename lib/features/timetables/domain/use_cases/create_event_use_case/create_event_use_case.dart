@@ -24,11 +24,11 @@ class CreateEventUseCase implements UseCase<void, CreateEventParams> {
 @freezed
 class CreateEventParams with _$CreateEventParams {
   const factory CreateEventParams({
-    required String title,
-    required int timetableId,
-    required int day,
-    required int startTime,
-    required int endTime,
+    @Default('') String title,
+    @Default(0) int timetableId,
+    @Default(-1) int day,
+    @Default(2) int startTime,
+    @Default(1) int endTime,
     @Default([]) List<int> hosts,
     String? description,
   }) = _CreateEventParams;

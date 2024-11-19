@@ -164,7 +164,7 @@ class __$$UpdateTimetableParamsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UpdateTimetableParamsImpl extends _UpdateTimetableParams {
   const _$UpdateTimetableParamsImpl(
-      {required this.id,
+      {this.id = -1,
       this.title,
       this.description,
       this.startTime,
@@ -175,6 +175,7 @@ class _$UpdateTimetableParamsImpl extends _UpdateTimetableParams {
       _$$UpdateTimetableParamsImplFromJson(json);
 
   @override
+  @JsonKey()
   final int id;
   @override
   final String? title;
@@ -228,7 +229,7 @@ class _$UpdateTimetableParamsImpl extends _UpdateTimetableParams {
 
 abstract class _UpdateTimetableParams extends UpdateTimetableParams {
   const factory _UpdateTimetableParams(
-      {required final int id,
+      {final int id,
       final String? title,
       final String? description,
       final int? startTime,

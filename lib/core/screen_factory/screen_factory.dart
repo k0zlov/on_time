@@ -8,6 +8,8 @@ import 'package:on_time/features/auth/view/screens/login_screen.dart';
 import 'package:on_time/features/auth/view/screens/registration_screen.dart';
 import 'package:on_time/features/timetables/view/cubit/timetables_cubit.dart';
 import 'package:on_time/features/timetables/view/screens/dashboard_screen.dart';
+import 'package:on_time/features/timetables/view/screens/timetable_screen.dart';
+import 'package:on_time/features/timetables/view/screens/timetable_settings_screen.dart';
 
 class ScreenFactory {
   const ScreenFactory._();
@@ -28,13 +30,25 @@ class ScreenFactory {
   }
 
   static Widget renderMainHeader(Widget child) {
-    return MainHeader(child: child);
+    return BlocProvider.value(
+      value: getIt<TimetablesCubit>(),
+      child: MainHeader(child: child),
+    );
   }
 
   static Widget renderDashboardScreen() {
-    return BlocProvider(
-      create: (context) => getIt<TimetablesCubit>(),
-      child: const DashboardScreen(),
-    );
+    return const DashboardScreen();
+  }
+
+  static Widget renderTimetableScreen({
+    required int timetableId,
+  }) {
+    return TimetableScreen(timetableId: timetableId);
+  }
+
+  static Widget renderTimetableSettingsScreen({
+    required int timetableId,
+  }) {
+    return TimetableSettingsScreen(timetableId: timetableId);
   }
 }

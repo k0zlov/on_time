@@ -171,7 +171,7 @@ void _cubits() {
           await getIt<TimetablesCubit>().onLogin();
         },
         onLogoutCallback: () async {
-          await getIt<TimetablesCubit>().onLogout();
+          getIt<TimetablesCubit>().onLogout();
         },
       ),
     );
