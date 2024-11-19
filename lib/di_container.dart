@@ -61,7 +61,7 @@ void _network() {
     )
     ..registerLazySingleton<Network>(
       () => NetworkImpl(
-        baseUrl: 'http://$_serverBaseUrl',
+        baseUrl: 'https://$_serverBaseUrl',
         interceptor: getIt(),
       ),
     );
@@ -74,7 +74,7 @@ void _remoteProviders() {
     )
     ..registerLazySingleton<TimetablesRemoteProvider>(
       () => TimetablesRemoteProviderImpl(
-        baseUrl: 'ws://$_serverBaseUrl',
+        baseUrl: 'wss://$_serverBaseUrl',
         network: getIt(),
       ),
     );
