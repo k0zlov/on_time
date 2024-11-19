@@ -44,6 +44,17 @@ class ApiEndpoints {
     url: '$timetables/leave',
     method: HttpMethods.post,
   );
+
+  static const updateMember = ApiEndpoint(
+    url: '$timetables/updateMember',
+    method: HttpMethods.post,
+  );
+
+  static const invitation = ApiEndpoint(
+    url: '$timetables/invitation',
+    method: HttpMethods.get,
+  );
+
   static const timetablesSocket = '$timetables/socket';
 
   static const events = '/events';

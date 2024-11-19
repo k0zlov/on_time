@@ -7,9 +7,11 @@ import 'package:on_time/features/timetables/domain/use_cases/create_event_use_ca
 import 'package:on_time/features/timetables/domain/use_cases/create_timetable_use_case/create_timetable_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/delete_event_use_case/delete_event_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/delete_timetable_use_case/delete_timetable_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/invitation_use_case/add_event_host_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/leave_timetable_use_case/leave_timetable_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/remove_event_host_use_case/remove_event_host_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/update_event_use_case/update_event_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/update_member_use_case/update_member_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/update_timetable_use_case/update_timetable_use_case.dart';
 
 abstract interface class TimetablesRepository {
@@ -49,7 +51,13 @@ abstract interface class TimetablesRepository {
     RemoveEventHostParams params,
   );
 
+  Future<Either<Failure, void>> updateMember(
+    UpdateMemberParams params,
+  );
+
   Future<Either<Failure, Stream<SocketResponseEntity>>> connectSocket();
 
   Future<Either<Failure, void>> disconnectSocket();
+
+  Future<Either<Failure, void>> invitation(InvitationParams params);
 }

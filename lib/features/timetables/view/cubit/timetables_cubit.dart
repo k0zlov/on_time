@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:on_time/core/use_case/use_case.dart';
-import 'package:on_time/features/timetables/domain/entities/event_entity/event_entity.dart';
-import 'package:on_time/features/timetables/domain/entities/event_host_entity/event_host_entity.dart';
 import 'package:on_time/features/timetables/domain/entities/member_entity/member_entity.dart';
 import 'package:on_time/features/timetables/domain/entities/socket_response_entity/socket_response_entity.dart';
 import 'package:on_time/features/timetables/domain/entities/timetable_entity/timetable_entity.dart';
@@ -12,11 +10,12 @@ import 'package:on_time/features/timetables/domain/use_cases/create_timetable_us
 import 'package:on_time/features/timetables/domain/use_cases/delete_event_use_case/delete_event_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/delete_timetable_use_case/delete_timetable_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/disconnect_socket_use_case/disconnect_socket_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/invitation_use_case/add_event_host_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/leave_timetable_use_case/leave_timetable_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/remove_event_host_use_case/remove_event_host_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/update_event_use_case/update_event_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/update_member_use_case/update_member_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/update_timetable_use_case/update_timetable_use_case.dart';
-import 'package:on_time/util/date_time_extension.dart';
 
 part 'timetables_state.dart';
 
@@ -33,52 +32,12 @@ class TimetablesCubit extends Cubit<TimetablesState> {
     required this.updateTimetableUseCase,
     required this.connectSocketUseCase,
     required this.disconnectSocketUseCase,
-  }) : super(const TimetablesState()) {
-    _state = _state.copyWith(
-      timetables: [
-        TimetableEntity(
-          startTime: DateTimeExtension.fromSecondsSinceMidnight(28800),
-          endTime: DateTimeExtension.fromSecondsSinceMidnight(61200),
-          id: 1,
-          title: 'Test',
-          description: null,
-          invitationCode: 'e1f4f5a7-a096-429e-8fba-94d310096bc3',
-          events: [
-            EventEntity(
-              day: 4,
-              startTime: DateTimeExtension.fromSecondsSinceMidnight(45600),
-              endTime: DateTimeExtension.fromSecondsSinceMidnight(50400),
-              id: 1,
-              timetableId: 1,
-              title: 'Some event',
-              description: 'Some desc',
-              hosts: [
-                EventHostEntity(
-                  id: 5,
-                  eventId: 1,
-                  memberId: 1,
-                ),
-              ],
-            ),
-          ],
-          members: [
-            MemberEntity(
-              id: 1,
-              userId: 1,
-              timetableId: 1,
-              name: 'Ivan',
-              lastName: 'Kozlov',
-              role: MemberRole.owner,
-              hosts: [],
-            ),
-          ],
-        ),
-      ],
-    );
+    required this.invitationUseCase,
+    required this.updateMemberUseCase,
+  }) : super(const TimetablesState());
 
-    emit(_state);
-  }
-
+  final UpdateMemberUseCase updateMemberUseCase;
+  final InvitationUseCase invitationUseCase;
   final AddEventHostUseCase addEventHostUseCase;
   final CreateEventUseCase createEventUseCase;
   final CreateTimetableUseCase createTimetableUseCase;
@@ -220,6 +179,36 @@ class TimetablesCubit extends Cubit<TimetablesState> {
   Future<void> onRemoveHost(int hostId) async {
     final failureOrSuccess = await removeEventHostUseCase(
       RemoveEventHostParams(id: hostId),
+    );
+
+    failureOrSuccess.fold(
+      (failure) {},
+      (_) {},
+    );
+  }
+
+  Future<void> onInvitation(String code) async {
+    final failureOrSuccess = await invitationUseCase(
+      InvitationParams(code: code),
+    );
+
+    failureOrSuccess.fold(
+      (failure) {},
+      (_) {},
+    );
+  }
+
+  Future<void> onUpdateMember(
+    int memberId,
+    int timetableId,
+    MemberRole role,
+  ) async {
+    final failureOrSuccess = await updateMemberUseCase(
+      UpdateMemberParams(
+        memberId: memberId,
+        role: role.name,
+        timetableId: timetableId,
+      ),
     );
 
     failureOrSuccess.fold(

@@ -57,6 +57,14 @@ class AppNavigation {
         },
         routes: [
           GoRoute(
+            name: AppRoutes.invitation.name,
+            path: AppRoutes.invitation.path,
+            builder: (context, state) {
+              final String? code = state.pathParameters['code'];
+              return ScreenFactory.renderInvitationLoadingScreen(code ?? '');
+            },
+          ),
+          GoRoute(
             name: AppRoutes.dashboard.name,
             path: AppRoutes.dashboard.path,
             builder: (context, state) {

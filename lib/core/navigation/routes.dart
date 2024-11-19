@@ -4,6 +4,7 @@ enum AppRoutes {
   registration('/registration'),
   user('/user'),
   dashboard('/dashboard'),
+  invitation('/invitation/:code'),
   timetable('/timetable/:timetableId'),
   timetableSettings('/timetable/:timetableId/timetableSettings');
 

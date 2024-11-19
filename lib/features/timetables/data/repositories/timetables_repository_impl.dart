@@ -11,9 +11,11 @@ import 'package:on_time/features/timetables/domain/use_cases/create_event_use_ca
 import 'package:on_time/features/timetables/domain/use_cases/create_timetable_use_case/create_timetable_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/delete_event_use_case/delete_event_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/delete_timetable_use_case/delete_timetable_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/invitation_use_case/add_event_host_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/leave_timetable_use_case/leave_timetable_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/remove_event_host_use_case/remove_event_host_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/update_event_use_case/update_event_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/update_member_use_case/update_member_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/update_timetable_use_case/update_timetable_use_case.dart';
 
 class TimetablesRepositoryImpl implements TimetablesRepository {
@@ -111,5 +113,17 @@ class TimetablesRepositoryImpl implements TimetablesRepository {
   @override
   Future<Either<Failure, void>> disconnectSocket() {
     return remoteProvider.disconnectSocket();
+  }
+
+  @override
+  Future<Either<Failure, void>> invitation(
+    InvitationParams params,
+  ) {
+    return remoteProvider.invitation(params);
+  }
+
+  @override
+  Future<Either<Failure, void>> updateMember(UpdateMemberParams params) {
+    return remoteProvider.updateMember(params);
   }
 }

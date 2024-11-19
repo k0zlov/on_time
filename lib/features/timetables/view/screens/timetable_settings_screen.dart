@@ -90,7 +90,7 @@ class _TimetableSettingsScreenState extends State<TimetableSettingsScreen> {
             Expanded(
               child: isTimetableSelected
                   ? TimetableSettingsContent(timetable: timetable)
-                  : MembersSettingsContent(timetableId: widget.timetableId),
+                  : MembersSettingsContent(timetable: timetable),
             ),
           ],
         ),

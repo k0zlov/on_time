@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:on_time/application.dart';
 import 'package:on_time/core/widgets/headers/main_header.dart';
+import 'package:on_time/core/widgets/screens/invitation_loading_screen.dart';
 import 'package:on_time/di_container.dart';
 import 'package:on_time/features/auth/view/cubit/auth_cubit.dart';
 import 'package:on_time/features/auth/view/screens/login_screen.dart';
@@ -50,5 +51,9 @@ class ScreenFactory {
     required int timetableId,
   }) {
     return TimetableSettingsScreen(timetableId: timetableId);
+  }
+
+  static Widget renderInvitationLoadingScreen(String code) {
+    return InvitationLoadingScreen(code: code);
   }
 }

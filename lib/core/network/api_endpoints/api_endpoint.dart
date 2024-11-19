@@ -18,4 +18,14 @@ class ApiEndpoint {
   final String url;
 
   final HttpMethods method;
+
+  ApiEndpoint copyWith({
+    String? url,
+    HttpMethods? method,
+  }) {
+    return ApiEndpoint(
+      url: url ?? this.url,
+      method: method ?? this.method,
+    );
+  }
 }

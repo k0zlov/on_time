@@ -21,9 +21,11 @@ import 'package:on_time/features/timetables/domain/use_cases/create_timetable_us
 import 'package:on_time/features/timetables/domain/use_cases/delete_event_use_case/delete_event_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/delete_timetable_use_case/delete_timetable_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/disconnect_socket_use_case/disconnect_socket_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/invitation_use_case/add_event_host_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/leave_timetable_use_case/leave_timetable_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/remove_event_host_use_case/remove_event_host_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/update_event_use_case/update_event_use_case.dart';
+import 'package:on_time/features/timetables/domain/use_cases/update_member_use_case/update_member_use_case.dart';
 import 'package:on_time/features/timetables/domain/use_cases/update_timetable_use_case/update_timetable_use_case.dart';
 import 'package:on_time/features/timetables/view/cubit/timetables_cubit.dart';
 
@@ -138,6 +140,12 @@ void _useCases() {
     ..registerLazySingleton<ConnectSocketUseCase>(
       () => ConnectSocketUseCase(repository: getIt()),
     )
+    ..registerLazySingleton<InvitationUseCase>(
+      () => InvitationUseCase(repository: getIt()),
+    )
+    ..registerLazySingleton<UpdateMemberUseCase>(
+      () => UpdateMemberUseCase(repository: getIt()),
+    )
     ..registerLazySingleton<UpdateTimetableUseCase>(
       () => UpdateTimetableUseCase(repository: getIt()),
     );
@@ -147,6 +155,8 @@ void _cubits() {
   getIt
     ..registerLazySingleton<TimetablesCubit>(
       () => TimetablesCubit(
+        updateMemberUseCase: getIt(),
+        invitationUseCase: getIt(),
         addEventHostUseCase: getIt(),
         createEventUseCase: getIt(),
         createTimetableUseCase: getIt(),
