@@ -34,6 +34,7 @@ final GetIt getIt = GetIt.instance;
 const String _serverBaseUrl = String.fromEnvironment('BASE_URL');
 
 Future<void> registerDependencies() async {
+  print(_serverBaseUrl);
   _services();
 
   _network();
